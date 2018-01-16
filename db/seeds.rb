@@ -31,7 +31,6 @@ Comment.find_or_create_by!(
   body: "Unique comment on the unique post"
   )
 
-
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
