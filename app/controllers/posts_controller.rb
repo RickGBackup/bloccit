@@ -3,7 +3,7 @@ class PostsController < ApplicationController
     @posts = Post.all
     @posts.each { |post| post.censor_spam }    # censor_spam is defined in the model
   end
-
+  
   def show
     @post = Post.find(params[:id])
   end

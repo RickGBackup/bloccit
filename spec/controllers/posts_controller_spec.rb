@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
   
-  let(:my_post) {Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph)}
+  let!(:my_post) {Post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph)}
 
   describe "GET #index" do
     it "returns http success" do
@@ -14,6 +14,7 @@ RSpec.describe PostsController, type: :controller do
       get :index
       #assigns is a class method that gives the test access to instance variables 
       #in the action that are available for the view"
+      binding.pry
       expect(assigns(:posts)).to eq([my_post])
     end
   end
