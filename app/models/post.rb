@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  has_many :comments
+  has_many :comments, dependent: :destroy   #delete all of a post's comments when that post is deleted
   
   def censor_spam
     #censor the title of the first post, and every fifth post thereafter
