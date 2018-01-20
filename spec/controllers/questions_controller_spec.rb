@@ -77,7 +77,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to render_template :edit
     end
       
-    it "assigns the post to be updated to @post" do
+    it "assigns the question to be updated to @question" do
       get :edit, {id: my_question.id}
       
       question_instance = assigns(:question)
@@ -85,6 +85,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(question_instance.id).to eq my_question.id
       expect(question_instance.title).to eq my_question.title
       expect(question_instance.body).to eq my_question.body
+      expect(question_instance.resolved).to eq my_question.resolved
     end
   end
   
@@ -92,20 +93,21 @@ RSpec.describe QuestionsController, type: :controller do
     it "updates question with expected attributes" do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
-    
-      put :update, id: my_question.id, question: {title: new_title, body: new_body}
+     
+      put :update, id: my_question.id, question: {title: new_title, body: new_body, resolved: true}
       
       updated_question = assigns(:question)
       expect(updated_question.id).to eq my_question.id
       expect(updated_question.title).to eq new_title
       expect(updated_question.body).to eq new_body
+      expect(updated_question.resolved).to eq true
     end
     
     it "redirects to the updated question" do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
       
-      put :update, id: my_question.id, question: {title: new_title, body: new_body}
+      put :update, id: my_question.id, question: {title: new_title, body: new_body, resolved: true}
       expect(response).to redirect_to my_question
     end
   end
@@ -118,7 +120,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(count).to eq 0
     end
     
-    it "redirects to posts index" do
+    it "redirects to questions index" do
       delete :destroy, {id: my_question.id}
       
       expect(response).to redirect_to questions_path
