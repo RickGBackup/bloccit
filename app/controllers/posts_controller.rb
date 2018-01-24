@@ -1,14 +1,11 @@
 class PostsController < ApplicationController
-  def index
-    @posts = Post.all
-    @posts.each { |post| post.censor_spam }    # censor_spam is defined in the model
-  end
   
   def show
     @post = Post.find(params[:id])
   end
 
   def new
+    @topic = Topic.find(params[:topic_id])
     @post = Post.new
   end
   
@@ -16,10 +13,12 @@ class PostsController < ApplicationController
     @post = Post.new
     @post.title = params[:post][:title]
     @post.body = params[:post][:body]
+    @topic = Topic.find(params[:topic_id])
+    @post.topic = @topic
     
     if @post.save
       flash[:notice] = "Post was saved successfully."
-      redirect_to @post
+      redirect_to [@topic, @post]
     else
       flash.now[:alert] = "There was an error saving the post.  Please try again."
       render :new
@@ -36,8 +35,8 @@ class PostsController < ApplicationController
     @post.body = params[:post][:body]
     
     if @post.save
-      flash[:notice] = "Post was updated successfully"
-      redirect_to @post
+      flash[:notice] = "Post was updated successfully."
+      redirect_to [@post.topic, @post]
     else
       flash.now[:alert] = "There was an error saving the post. Please try again"
       render :edit
@@ -45,12 +44,11 @@ class PostsController < ApplicationController
   end
   
   def destroy
-    
     @post = Post.find(params[:id])
     
     if @post.destroy
       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
-      redirect_to posts_path
+      redirect_to @post.topic
     else
       flash.now[:alert] = "There was an error deleting the post."
       render :show

@@ -18,6 +18,7 @@
   gem 'rspec-rails', '~> 3.0'
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'shoulda'   #adds RSpec methods for writing association tests
  end
  
  
