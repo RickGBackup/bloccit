@@ -12,7 +12,6 @@ class TopicsController < ApplicationController
   end
   
   def create
-    binding.pry
     @topic = Topic.new
     #set the attributes according to the parameters passed via the POST request
     @topic.name = params[:topic][:name]
