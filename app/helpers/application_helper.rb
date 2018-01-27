@@ -32,8 +32,14 @@ end
 # with the css-class set to 'form-group' on 'form-group has-error', depending 
 # # whether there was an error.
 
-# So, if there was an error, form_group_tag will generate HTML that display the error, 
-# otherwise it generates standard form-group html.
+# So, if there was an error, form_group_tag will style the form element accordingly - in this case,
+# it makes makes the erroneous field red-bordered.
+
+# We could then change the CSS class has-error, or create our own and include it in
+# form_for_tag, if we wanted a different
+# styling for erroneous fields.
+
+
 
 
 
