@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :sponsored_posts, except: [:index, :update, :destroy ] #only new, edit and view controller actions.
   end
   
-  
+  resources :users, only: [:new, :create]
   
   
   get 'about' => 'welcome#about'
