@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  before_save { self.email = email.downcase if email.present? }   #the assigned email is downcased before the User is saved.
+  
+  before_save { self.email = email.downcase if email.present? }  #the assigned email is downcased before the User is saved.
+  before_save { self.name = name.split.map! { |name| name.capitalize }.join(" ") if name.present? }  #Convert name to camel case before User is saved.
   
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
   

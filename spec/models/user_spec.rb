@@ -34,4 +34,18 @@ RSpec.describe User, type: :model do
       expect(user_with_invalid_email).to_not be_valid
     end
   end
+  
+  describe "Name format" do
+    let(:user_lower_case_name) { User.new(name: "james dean", email: "user1@bloccit.com", password: "abcdef") }
+    let(:user_upper_case_name) { User.new(name: "JAMES DEAN", email: "user2@bloccit.com",  password: "abcdef") }
+    
+    it "should be camel case after saving" do
+      
+      user_lower_case_name.save
+      expect(User.last.name).to eq("James Dean")
+  
+      user_upper_case_name.save
+      expect(User.last.name).to eq("James Dean")
+    end
+  end
 end
