@@ -21,5 +21,14 @@ class UsersController < ApplicationController
     end
   end
   
+  def confirm
+    #as with create action, @user is set to User.new with attributes provided by params. 
+    #Since this confirm action is an intermediate step between new and create.
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+  end
   
 end
