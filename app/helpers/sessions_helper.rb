@@ -15,5 +15,4 @@ module SessionsHelper
   def current_user  #this can 
     User.find_by(id: session[:user_id])
   end
-  
 end
