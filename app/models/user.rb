@@ -17,6 +17,4 @@ class User < ActiveRecord::Base
   
   has_secure_password  #Adds methods for setting/authenticating pws, and hashing them, so they're saved
   #in an encrypted format.
-  
-  
 end

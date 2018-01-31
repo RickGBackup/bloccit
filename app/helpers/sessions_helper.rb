@@ -8,11 +8,11 @@ module SessionsHelper
     #session can only have 1 user ID, & a user only related to 1 session.
   end
   
-  def destroy_session(user)
+  def destroy_session
     session[:user_id] = nil
   end
   
-  def current_user  #this can 
+  def current_user
     User.find_by(id: session[:user_id])
   end
 end
