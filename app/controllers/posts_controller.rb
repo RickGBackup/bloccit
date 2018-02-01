@@ -1,5 +1,8 @@
 class PostsController < ApplicationController
   
+  before_action :require_sign_in, except: :show #all actions only execute if
+  #there's a signed in user, according to require_sign_in which is defined in ApplicationController
+  
   def show
     @post = Post.find(params[:id])
   end
@@ -10,11 +13,14 @@ class PostsController < ApplicationController
   end
   
   def create
-    @post = Post.new
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
+    #refactor the individual assignments below - replace with one mass assignment:
+    # @post = Post.new
+    # @post.title = params[:post][:title]
+    # @post.body = params[:post][:body]
+    # @post.topic = @topic
     @topic = Topic.find(params[:topic_id])
-    @post.topic = @topic
+    @post = @topic.posts.build(post_params)
+    @post.user = current_user
     
     if @post.save
       flash[:notice] = "Post was saved successfully."
@@ -31,9 +37,9 @@ class PostsController < ApplicationController
   
   def update
     @post = Post.find(params[:id])
-    @post.title = params[:post][:title]
-    @post.body = params[:post][:body]
-    
+    # @post.title = params[:post][:title]
+    # @post.body = params[:post][:body]
+    @post.assign_attributes(post_params)
     if @post.save
       flash[:notice] = "Post was updated successfully."
       redirect_to [@post.topic, @post]
@@ -53,5 +59,11 @@ class PostsController < ApplicationController
       flash.now[:alert] = "There was an error deleting the post."
       render :show
     end
+  end
+  
+  private
+  
+  def post_params
+    params.require(:post).permit(:title, :body)
   end
 end
