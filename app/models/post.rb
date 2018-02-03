@@ -3,7 +3,6 @@ class Post < ActiveRecord::Base
   belongs_to :user
   has_many :comments, dependent: :destroy   #delete all of a post's comments when that post is deleted
   
-  
   default_scope  { order('created_at DESC') }  #Instruct rails to retrieve posts from the database by their created_at value, in descending order.
   scope :ordered_by_title, -> { order('title DESC') }
   scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }
