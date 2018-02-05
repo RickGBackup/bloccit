@@ -19,5 +19,5 @@ class User < ActiveRecord::Base
   has_secure_password  #Adds methods for setting/authenticating pws, and hashing them, so they're saved
   #in an encrypted format.
   
-  enum role: [:member, :admin]  #allows us to reference/assign the role attribute, which is an integer using
+  enum role: [:member, :admin, :moderator]  #allows us to reference/assign the role attribute, which is an integer using
 end
