@@ -32,11 +32,9 @@ class PostsController < ApplicationController
   end
     
   def edit
-    @post = Post.find(params[:id])
   end
   
   def update
-    @post = Post.find(params[:id])
     # @post.title = params[:post][:title]
     # @post.body = params[:post][:body]
     @post.assign_attributes(post_params)
@@ -50,8 +48,6 @@ class PostsController < ApplicationController
   end
   
   def destroy
-    @post = Post.find(params[:id])
-    
     if @post.destroy
       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
       redirect_to @post.topic
@@ -68,19 +64,20 @@ class PostsController < ApplicationController
   end
   
   def authorize_user
-    post = Post.find(params[:id])
-    unless current_user == post.user || current_user.admin?  #only allow the user to perform action on the post if they own it or are admin.
+    @post = Post.find(params[:id])
+    
+    unless current_user == @post.user || current_user.admin?  #only allow the user to perform action on the post if they own it or are admin.
       flash[:alert] = "You must be an admin to do that."
-    redirect_to [post.topic, post]
+    redirect_to [@post.topic, @post]
     end
   end
   
   def authorize_mod
-    post = Post.find(params[:id])
+    @post = Post.find(params[:id])
     
-    unless current_user == post.user ||  ( current_user.admin? || current_user.moderator?) #only allow the user to perform action on the post if they own it or are admin/mod.
+    unless current_user == @post.user ||  ( current_user.admin? || current_user.moderator?) #only allow the user to perform action on the post if they own it or are admin/mod.
       flash[:alert] = "You must be an admin or mod to do that."
-      redirect_to [post.topic, post]
+      redirect_to [@post.topic, @post]
     end
   end
 end
