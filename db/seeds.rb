@@ -43,6 +43,7 @@ end
 #Create comments. Assign each comment a random post.
 100.times do
   Comment.create!(
+    user: users.sample,
     post: posts.sample,
     body: RandomData.random_paragraph
   )
@@ -60,7 +61,8 @@ unique_post = Post.find_or_create_by!(
 #Create a unique Comment
 Comment.find_or_create_by!(
   post: unique_post,
-  body: "Unique comment on the unique post"
+  body: "Unique comment on the unique post",
+  user: users.sample
   )
 
 #Create random Advertisements
