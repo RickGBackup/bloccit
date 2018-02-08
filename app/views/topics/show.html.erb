@@ -8,7 +8,10 @@
 <% end %>
 <div class="row">
   <div class="col-md-8">
-    <p class = "lead"><% @topic.description %></p>
+    <p class = "lead">
+      <%= render partial: "labels/list", locals: { labels: @topic.labels } %>
+       <br />
+      <% @topic.description %></p>
     <h3>Posts</h3>
     <%= render @topic.posts %>
     <h3>Sponsored Posts<h3>

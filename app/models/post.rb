@@ -2,6 +2,8 @@ class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
   has_many :comments, dependent: :destroy   #delete all of a post's comments when that post is deleted
+  has_many :labelings, as: :labelable
+  has_many :labels, through: :labelings
   
   default_scope  { order('created_at DESC') }  #Instruct rails to retrieve posts from the database by their created_at value, in descending order.
   scope :ordered_by_title, -> { order('title DESC') }

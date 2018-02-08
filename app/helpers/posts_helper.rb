@@ -1,11 +1,11 @@
 module PostsHelper
-  def user_authorized_to_edit_post?(post)
+  def user_authorized_to_edit_post?(post, user)
     #true if there's a logged in user, and they either own the post, or are an admin
-    current_user && (current_user == post.user || current_user.admin? || current_user.moderator? )
+    user == post.user || user.admin? || user.moderator? 
   end
   
-  def user_authorized_to_delete_post?(post)
+  def user_authorized_to_delete_post?(post, user)
     #user can delete if signed in, not a moderator, and owns the post or is an admin.
-    current_user && !current_user.moderator? &&  (current_user == post.user || current_user.admin?)
+    user == post.user || user.admin?
   end
 end
