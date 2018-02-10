@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :topics do     #nest the :posts and :sponsored_posts resources inside :topics
     resources :posts, except: [:index]
     resources :sponsored_posts, except: [:index, :update, :destroy ] #only new, edit and view controller actions.
+    resources :comments, only: [:create, :destroy]
   end
   
   resources :posts, only: [] do  #shallow routing -  creates posts/:post_id/comments routes, without deep nesting under topics.

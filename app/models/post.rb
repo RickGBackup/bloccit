@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user
-  has_many :comments, dependent: :destroy   #delete all of a post's comments when that post is deleted
+  has_many :comments, as: :commentable, dependent: :destroy   #delete all of a post's comments when that post is deleted
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
   

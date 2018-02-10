@@ -40,11 +40,20 @@ posts = Post.all
   )
 end
 
-#Create comments. Assign each comment a random post.
+#Create comments on posts. Assign each comment a random post.
 100.times do
   Comment.create!(
     user: users.sample,
-    post: posts.sample,
+    commentable: posts.sample,
+    body: RandomData.random_paragraph
+  )
+end
+
+#Create comments on topics. Assign each comment a random topic.
+50.times do
+  Comment.create!(
+    user: users.sample,
+    commentable: topics.sample,
     body: RandomData.random_paragraph
   )
 end
@@ -58,9 +67,9 @@ unique_post = Post.find_or_create_by!(
   topic: topics.sample
 )
 
-#Create a unique Comment
+#Create a unique Comment on Unique Post
 Comment.find_or_create_by!(
-  post: unique_post,
+  commentable: unique_post,
   body: "Unique comment on the unique post",
   user: users.sample
   )
@@ -105,7 +114,6 @@ moderator = User.create!(
   password: 'helloworld',
   role: 'moderator'
   )
-
 
 puts "Seed finished"
 puts "#{User.count} users created"
