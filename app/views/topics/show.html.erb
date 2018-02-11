@@ -13,7 +13,10 @@
        <br />
       <% @topic.description %></p>
     <h3>Posts</h3>
-    <%= render @topic.posts %>
+    <% @topic.posts.each do |post| %>
+      <%= render partial: 'votes/voting', locals: { post: post } %>
+      <%= render partial: 'posts/post', locals: { post: post }  %>
+    <% end %>
     <h3>Sponsored Posts</h3>
     <%= render @topic.sponsored_posts %>
     <div>
