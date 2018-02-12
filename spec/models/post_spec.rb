@@ -78,4 +78,14 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+  
+  describe "#after_create" do
+    it "creates one upvote on the post" do
+      expect(post.votes.count).to eq(1)
+    end
+    
+    it "associates initial upvote with the user that created post" do
+      expect(post.votes.first.user).to eq(user)
+    end
+  end
 end
