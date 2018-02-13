@@ -5,6 +5,7 @@ class Post < ActiveRecord::Base
   has_many :votes, dependent: :destroy
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
+  has_many :favorites, dependent: :destroy
   after_save :after_create
   
   default_scope  { order('rank DESC') }  #Instruct rails to retrieve posts from the database by their rank value, in descending order.
