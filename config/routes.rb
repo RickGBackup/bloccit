@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   
   resources :posts, only: [] do  #shallow routing -  creates posts/:post_id/comments routes, without deep nesting under topics.
     resources :comments, only: [:create, :destroy]
-    
+    resources :favorites, only: [:create, :destroy]
     post '/up-vote' => 'votes#up_vote', as: :up_vote   # POST route at post/:id/up-vote. associated with votes#up_vote action.  as: :up_vote ties it to the up_vote_path method. 
     post '/down-vote' => 'votes#down_vote', as: :down_vote   
   end

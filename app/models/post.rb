@@ -7,6 +7,9 @@ class Post < ActiveRecord::Base
   has_many :labels, through: :labelings
   after_create :create_vote
   
+  has_many :favorites, dependent: :destroy
+
+  
   default_scope  { order('rank DESC') }  #Instruct rails to retrieve posts from the database by their rank value, in descending order.
   scope :ordered_by_title, -> { order('title DESC') }
   scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }
