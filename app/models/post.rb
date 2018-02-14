@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   has_many :votes, dependent: :destroy
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
-  after_save :after_create
+  after_create :create_vote
   
   default_scope  { order('rank DESC') }  #Instruct rails to retrieve posts from the database by their rank value, in descending order.
   scope :ordered_by_title, -> { order('title DESC') }
@@ -39,10 +39,6 @@ class Post < ActiveRecord::Base
     update_attribute(:rank, new_rank)
   end
     
-  def after_create
-    create_vote
-  end
-  
   def censor_spam
     #censor the title of the first post, and every fifth post thereafter
     if self.id == 1 || (self.id - 1) % 5 == 0
@@ -53,6 +49,6 @@ class Post < ActiveRecord::Base
   private
   
   def create_vote
-    user.votes.create(value: 1, post: self) if self.votes.empty?  #conditional is needed to avoid an infinite loop - i.e. create_vote saving a vote, calling update_post, saving a post, ... ad infinitum
+    user.votes.create(value: 1, post: self)
   end
 end
