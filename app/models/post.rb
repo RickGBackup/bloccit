@@ -5,10 +5,8 @@ class Post < ActiveRecord::Base
   has_many :votes, dependent: :destroy
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
-  after_create :create_vote
-  
   has_many :favorites, dependent: :destroy
-
+  after_create :create_vote, :create_favorite, :send_email_notification
   
   default_scope  { order('rank DESC') }  #Instruct rails to retrieve posts from the database by their rank value, in descending order.
   scope :ordered_by_title, -> { order('title DESC') }
@@ -53,5 +51,13 @@ class Post < ActiveRecord::Base
   
   def create_vote
     user.votes.create(value: 1, post: self)
+  end
+  
+  def create_favorite
+    user.favorites.create( post: self)
+  end
+  
+  def send_email_notification
+    FavoriteMailer.new_post(favorite.user, self).deliver_now
   end
 end

@@ -1,0 +1,8 @@
+Post favorited and followed - "<%= @post.title %>"
+<%= "=" * (@post.title.length + 12) %>
+ 
+Thanks for posting on Bloccit, <%= @user.name.split[0] %>.  
+
+You will receive an email notification whenever a new comment is made on this post.
+ 
+Visit your post online at: <%= topic_post_url(@post.topic, @post) %>
