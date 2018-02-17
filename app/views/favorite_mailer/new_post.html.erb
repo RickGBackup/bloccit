@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+   </head>
+   <body>
+     <h1>Post favorited and followed - "<%= @post.title %>"</h1>
+     <small>
+     Thanks for posting on Bloccit, <%= @user.name.split[0] %>.  
+     You will receive an email notification whenever a new comment is made on this post.
+     </small>
+     <p>
+       <%= link_to "View your post on Bloccit", topic_post_url(@post.topic, @post) %>
+     </p>
+   </body>
+ </html>

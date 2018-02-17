@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
+  before do
+    # disable creation of favorite by, and initial email to, user who creates post - for ease of testing with a new post
+    Post.any_instance.stub(:create_favorite)
+    Post.any_instance.stub(:send_email_notification)
+  end
   
   let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
    
@@ -9,7 +14,6 @@ RSpec.describe Comment, type: :model do
   let(:comment) { Comment.create!(body: "Comment Body", commentable: post, user: user) }
   
   it { is_expected.to belong_to(:commentable) }
-  
   
   it {is_expected.to validate_presence_of(:body) }
   it {is_expected.to validate_length_of(:body).is_at_least(5) }
@@ -22,7 +26,7 @@ RSpec.describe Comment, type: :model do
   
    describe "after_create" do
     before do
-      @another_comment = Comment.new(body: 'Comment Body', post: post, user: user)
+      @another_comment = Comment.new(body: 'Comment Body', commentable: post, user: user)
     end
  
     it "sends an email to users who have favorited the post" do

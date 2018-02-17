@@ -2,6 +2,13 @@ require 'rails_helper'
 include SessionsHelper
 
 RSpec.describe FavoritesController, type: :controller do
+  
+  before do
+    # disable creation of favoriteby, and initial email to, user who creates post - for ease of testing with a new post
+    Post.any_instance.stub(:create_favorite)
+    Post.any_instance.stub(:send_email_notification)
+  end
+  
   let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
