@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  
+  before do
+    # disable creation of favoriteby, and initial email to, user who creates post - for ease of testing with a new post
+    Post.any_instance.stub(:create_favorite)
+    Post.any_instance.stub(:send_email_notification)
+  end
+  
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
   
   it { is_expected.to have_many(:posts) }

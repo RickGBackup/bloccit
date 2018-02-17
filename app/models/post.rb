@@ -58,6 +58,6 @@ class Post < ActiveRecord::Base
   end
   
   def send_email_notification
-    FavoriteMailer.new_post(favorite.user, self).deliver_now
+    FavoriteMailer.new_post(user, self).deliver_now
   end
 end

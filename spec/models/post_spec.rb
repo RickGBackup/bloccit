@@ -97,7 +97,6 @@ RSpec.describe Post, type: :model do
     end
     
     it 'associates the favorite with the user who posted' do
-      binding.pry
       expect(post.favorites.first.user).to eq(user)
     end
   end
