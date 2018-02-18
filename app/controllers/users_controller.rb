@@ -22,6 +22,11 @@ class UsersController < ApplicationController
     end
   end
   
+  def show
+    @user = User.find(params[:id])
+    @posts = @user.posts.visible_to(current_user)  # the :visible_to scope is defined in the Post.rb model.
+  end
+  
   def confirm
     #as with create action, @user is set to User.new with attributes provided by params. 
     #Since this confirm action is an intermediate step between new and create.

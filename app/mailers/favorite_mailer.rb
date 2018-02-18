@@ -25,5 +25,4 @@ class FavoriteMailer < ApplicationMailer
     
     mail(to: user.email, subject: "Your post has been favorited: #{post.title}")
   end
-
 end

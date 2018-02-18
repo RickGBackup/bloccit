@@ -21,6 +21,7 @@
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'shoulda'   #adds RSpec methods for writing association tests
+  gem 'factory_girl_rails', '~> 4.0'
  end
  
  

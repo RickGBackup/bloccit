@@ -6,10 +6,14 @@ RSpec.describe Post, type: :model do
   let(:title) { RandomData.random_sentence }
   let(:body) { RandomData.random_paragraph }
  
-  let(:topic) { Topic.create!(name: name, description: description) }
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  let(:post) { topic.posts.create!(title: title, body: body, user: user) }
-  
+  # let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
+  # let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+  # let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user) }
+ 
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
+   
   it { is_expected.to have_many(:labelings) }
   it { is_expected.to have_many(:labels).through(:labelings) }
   
@@ -31,7 +35,7 @@ RSpec.describe Post, type: :model do
   
   describe "attributes" do
     it "has a title, body  and user attribute" do
-      expect(post).to have_attributes(title: title, body: body, user: user)
+      expect(post).to have_attributes(title: post.title, body: post.body)
     end
   end
   
@@ -87,7 +91,7 @@ RSpec.describe Post, type: :model do
     end
     
     it "associates initial upvote with the user that created post" do
-      expect(post.votes.first.user).to eq(user)
+      expect(post.votes.first.user).to eq(post.user)
     end
   end
   
@@ -97,7 +101,7 @@ RSpec.describe Post, type: :model do
     end
     
     it 'associates the favorite with the user who posted' do
-      expect(post.favorites.first.user).to eq(user)
+      expect(post.favorites.first.user).to eq(post.user)
     end
   end
 end

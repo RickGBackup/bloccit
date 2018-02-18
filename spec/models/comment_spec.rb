@@ -7,10 +7,10 @@ RSpec.describe Comment, type: :model do
     Post.any_instance.stub(:send_email_notification)
   end
   
-  let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
-   
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user) }
+  # create test objects using FactoryGirl
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
   let(:comment) { Comment.create!(body: "Comment Body", commentable: post, user: user) }
   
   it { is_expected.to belong_to(:commentable) }

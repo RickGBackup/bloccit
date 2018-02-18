@@ -9,12 +9,12 @@ class Post < ActiveRecord::Base
   after_create :create_vote, :create_favorite, :send_email_notification
   
   default_scope  { order('rank DESC') }  #Instruct rails to retrieve posts from the database by their rank value, in descending order.
+  scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }  # if user is present, Post is visible to all. Else, retrieve all posts that belong to public topics, using ActiveRecord#joins.  
   scope :ordered_by_title, -> { order('title DESC') }
   scope :ordered_by_reverse_created_at, -> { order('created_at ASC') }
   
   #Scopes allow you to name and chain together SQL commands to select specific objects in a specific order.
   #Defining scopes in the model gives us new method calls for making DB queries.
-  
   
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 20 }, presence: true

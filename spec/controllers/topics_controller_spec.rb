@@ -3,8 +3,7 @@ include RandomData
 include SessionsHelper
 
 RSpec.describe TopicsController, type: :controller do
-  let (:my_topic) { Topic.create!(name:  RandomData.random_sentence, description:   RandomData.random_paragraph) }
-  
+  let(:my_topic) { create(:topic) }
   #for guests, redirect to new_session_path for all actions except index & show.
   #for members, redirect to topics_path for all actions except index & show.
   #for admins, allow them to perform all actions.
