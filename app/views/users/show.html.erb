@@ -5,13 +5,13 @@
       <% avatar_url = @user.avatar_url(128) %>
       <% if avatar_url %>
         <div class="media-left">
-          <%= image_tag avatar_url, class: 'media-object' %>
+          <%= image_tag avatar_url, class: 'media-object gravatar' %>
         </div>
       <% end %>
       <div class="media-body">
-        <h2 class="media-heading"><%= @user.name %></h2>
+        <h2 class="media-heading"><%= @user.show_name_or_no_posts_msg %></h2>
         <small>
-          <%= pluralize(@user.posts.count, 'post') %>,
+          <%= pluralize(@user.posts.count, 'post')  %>,
           <%= pluralize(@user.comments.count, 'comment') %>
         </small>
       </div>
@@ -24,3 +24,20 @@
  
 <h2>Comments</h2>
 <%= render @user.comments %>
+
+<h2>Favorite Posts</h2>
+<% @favorite_posts.each do |post| %>
+  <div class="row">
+    <div class="col-md-8">
+      <% avatar_url = post.user.avatar_url(55) %>
+      <% if avatar_url %>
+        <div style="margin-top: 15px;">
+          <%= image_tag avatar_url, class: 'gravatar pull-left' %>
+        </div>
+      <% end %>
+      <%= render partial: 'votes/voting', locals: { post: post } %>
+      <%= render post %>
+    </div>
+  </div>
+<% end %>
+

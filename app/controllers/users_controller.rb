@@ -25,6 +25,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.visible_to(current_user)  # the :visible_to scope is defined in the Post.rb model.
+    @favorite_posts = get_favorite_posts(@user)
   end
   
   def confirm
@@ -36,4 +37,14 @@ class UsersController < ApplicationController
     @user.password = params[:user][:password]
     @user.password_confirmation = params[:user][:password_confirmation]
   end
+  
+  private
+  
+  def get_favorite_posts(user)
+    # grab posts with favorites that have same user ID as user
+    posts = Post.all
+    favorite_posts = posts.select{ |post| post.favorites.find_by_user_id(user.id) }
+  end
 end
+
+

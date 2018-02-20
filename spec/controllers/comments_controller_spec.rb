@@ -7,7 +7,7 @@ RSpec.describe CommentsController, type: :controller do
   let(:other_user) { create(:user) }
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
    
-  let(:my_comment) { Comment.create!(body: 'Comment Body', commentable: my_post, user: my_user) }
+  let(:my_comment) { create(:comment, body: 'Comment Body', commentable: my_post, user: my_user) }
  
 # guests can't comment - they're redirected to sign-in.
 # members can create comments, destroy their own, but are redirected to post's show view if attempt to destroy comment owned by another member.
