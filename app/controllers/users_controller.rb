@@ -42,8 +42,10 @@ class UsersController < ApplicationController
   
   def get_favorite_posts(user)
     # grab posts with favorites that have same user ID as user
-    posts = Post.all
-    favorite_posts = posts.select{ |post| post.favorites.find_by_user_id(user.id) }
+    favorite_posts = Post.joins(:favorites).where('favorites.user' => user)
+    
+    # previous implementation: favorite_posts = posts.select{ |post| post.favorites.find_by_user_id(user.id) }
+    # This works, but more efficient to use the joins ActiveRecord method.
   end
 end
 
