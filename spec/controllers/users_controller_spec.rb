@@ -62,7 +62,7 @@ RSpec.describe UsersController, type: :controller do
   describe "not signed in" do
     let(:factory_user) { create(:user) }  # Here create() is a method from FactoryGirl
     let(:other_user) { create(:user) }
-    let(:post_a) { create(:post, user: other_user) }
+    let(:post_a) { create(:post, user: other_user) } 
     let(:post_b) { create(:post, user: other_user) }
     
     before do
