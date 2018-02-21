@@ -7,9 +7,11 @@ class Topic < ActiveRecord::Base
   
   has_many :comments, as: :commentable
   
-  scope :visible_to, -> (user) { user ? all : where(public: true) }  # scope generates the method visible_to(user).
+  scope :visible_to, -> (user) { user ? all : publicly_viewable }  # scope generates the method visible_to(user).
   #visible_to(user) runs the logic in the block on the relation/class it is called on.
   # It returns either Topic.all or Topic.where(pubic: true), dependent on truthiness of its argument, user.
+  scope :publicly_viewable, -> { where(public: true) }
+  scope :privately_viewable, -> { where(public: false) }
   
   validates :name, presence: true, length: {minimum: 5}
   validates :description, presence: true, length: {minimum: 15}
