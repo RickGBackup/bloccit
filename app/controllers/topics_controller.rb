@@ -6,11 +6,16 @@ class TopicsController < ApplicationController
   
   
   def index
-    @topics = Topic.all
+    @topics = Topic.visible_to(current_user) # Call the visible_to scope, defined in the Topic model.
   end
   
   def show
     @topic = Topic.find(params[:id]) #params hash contains the ID,because it is passed via GET request to the controller.
+  # only signed-in users may view private topics
+    unless @topic.public || current_user
+      flash[:alert] = "You must be signed in to view private topics."
+      redirect_to new_session_path
+    end
   end
   
   def new
