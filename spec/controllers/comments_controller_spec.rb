@@ -42,7 +42,7 @@ RSpec.describe CommentsController, type: :controller do
       it "returns http success" do
         post :create, format: :js, post_id: my_post.id, comment: {body: RandomData.random_paragraph}
         expect(response).to have_http_status(:success)
-        end
+      end
     end
  
     describe "DELETE destroy" do
