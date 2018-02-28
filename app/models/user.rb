@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   before_save { self.name = name.split.map! { |name| name.capitalize }.join(" ") if name.present? }  #Convert name to camel case before User is saved.
   before_save { self.role ||= :member }  #Set the role to member if the the user has no role attribute
   
+  before_create :generate_auth_token
+   
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
   
   validates :password, presence: true, length: { minimum: 6 }, unless: :password_digest   #Ensures that when we create a new user, they have a pw
@@ -38,6 +40,16 @@ class User < ActiveRecord::Base
       "#{name} has not submitted any posts yet."
     else
       name
+    end
+  end
+  
+  def generate_auth_token
+    loop do
+      self.auth_token = SecureRandom.base64(64)
+      # generate a different token if there is already a user in DB with that auth token.  
+      # As this method is called before_create, 
+      # the search below will only look through pre-existing users.
+      break unless User.find_by(auth_token: auth_token)
     end
   end
 end
