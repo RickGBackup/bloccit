@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :advertisements
   
-  resources :topics do     #nest the :posts and :sponsored_posts resources inside :topics
+  resources :topics do    #nest the :posts and :sponsored_posts resources inside :topics
     resources :posts, except: [:index]
     resources :sponsored_posts, except: [:index, :update, :destroy ] #only new, edit and view controller actions.
     resources :comments, only: [:create, :destroy]
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:index, :show, :create, :update]
       resources :topics, except: [:edit, :new]
-      resources :posts, only: [:index, :show]
+      resources :posts, except: [:edit, :new]
       resources :comments, only: [:index, :show]
     end
   end
